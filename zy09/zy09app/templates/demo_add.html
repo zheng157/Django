@@ -1,0 +1,14 @@
+{% extends 'demo_base.html' %}
+{% block title %}
+    添加博客
+{% endblock %}
+{% block bodyblock %}
+    <h1>添加新文章</h1>
+    <form action="" method="POST"> {% csrf_token %}
+        标题<input type="text" autocomplete="off" id="title"
+                 placeholder="请输入标题" name='title' value="{{ blog.title }}"><a style="margin-left: 63px;" href="{% url 'blog_list' %}">博客查阅</a> <br> <br><br>
+        内容 <textarea name="content" id="content"
+                     placeholder="请输入内容" cols="30" rows="10">{{ blog.content }}</textarea>
+        <button type="submit">发布博客</button>
+    </form>
+{% endblock %}

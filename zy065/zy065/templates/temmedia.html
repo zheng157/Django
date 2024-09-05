@@ -1,0 +1,9 @@
+﻿<script src="/static/jquery-3.4.1.min.js"></script>
+{{mform.media}}
+<form action="/media/" method="POST">
+    {% csrf_token %}
+    <table>{{mform.as_p}}</table>
+    <input type="submit" value="提交">
+</form>
+<hr>
+{{msg}}

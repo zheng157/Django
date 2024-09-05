@@ -1,0 +1,22 @@
+﻿<center>
+    使用自定义模型实现的用户登录页面
+    {% if form.errors %}
+    <p style="color:red">用户名或密码有错，请重新登录！</p>
+    {% endif %}
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td align="right">用户名：</td>
+                <td>{{ form.username }}</td>
+            </tr>
+            <tr>
+                <td align="right">密码：</td>
+                <td>{{ form.password }}</td>
+            </tr>
+        </table>
+        <input type="submit" value="登录">
+        <input type="hidden" name="next" value="{% url 'change_user' %}">
+    </form>
+    <p><a href="{% url 'add_new' %}">新用户注册</a></p>
+</center>

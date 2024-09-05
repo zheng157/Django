@@ -1,0 +1,24 @@
+﻿{% extends "admin/change_form.html" %}    <!--继承默认模板-->
+{% load i18n admin_urls %}  <!--加载Django自定义的模板标记集-->
+{% block after_field_sets %}  <!--覆盖after_field_sets块-->
+<input type="button" id="make_paper" value="生成试卷内容" />
+<script>
+    django.jQuery(document).ready(function () {
+        django.jQuery('#make_paper').click(function () {
+            if (django.jQuery('#id_template').val() == "") {
+                //单击“生成试卷内容”按钮时，没有选择试卷模板，显示对话框提示
+                alert('请先选择试卷模板！')
+            }
+            else {
+                //单击“生成试卷内容”按钮时，选择了试卷模板
+                var a = django.jQuery('#id_template').val();//获得试卷模板ID
+                //发起AJAX请求，将试卷模板ID作为参数传递给/getpapercontent/
+                django.jQuery.get("/getpapercontent/", { 'papertemplateid': a },
+                    function (ret) {
+                        django.jQuery('#id_content').val(ret)//将响应结果添加到网页
+                    });
+            }
+        })
+    })
+</script>
+{% endblock %}

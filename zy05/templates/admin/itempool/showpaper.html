@@ -1,0 +1,44 @@
+﻿<h3>Python在线题库试卷导出</h3>
+请选择试卷：
+<select id="paperlist">
+    <option value="">------------</option>
+    {% for p in pcs %}
+    <!--自动生成试卷列表选项-->
+    <option value="{{p.id}}">{{p.template.name}}：{{p.name}}</option>
+    {% endfor %}
+</select>
+<input type="button" id="down" value="获取试卷下载地址" /><span id="todown"></span>
+<hr>
+试卷内容预览：
+<div id="paper" style="border-style:groove;border-width: 5px;"></div>
+<script src="/static/jquery-3.4.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#paperlist').change(function () {
+            if ($(this).val() == "") {
+                //改变试卷列表选项时，如果没有选择试卷，
+                //则清空原有的试卷预览和下载链接
+                $('#paper').html('')
+                $('#todown').html('')
+            }
+            else {
+                //在试卷列表中选择了试卷时，将试卷ID传递给服务器，获取试卷内容
+                var a = $(this).children('option:selected').val()
+                $('#todown').html('')   //改变当前试卷时，先清除原有的下载
+                //发起AJAX请求，获取试卷预览内容
+                $.get("/getpaper/", { 'paperid': a },function (ret) {
+                        $('#paper').html(ret)//将响应结果添加到网页
+                });
+            }
+        })
+        $('#down').click(function () {
+            //获取试卷下载链接
+            var a = $(paperlist).children('option:selected').val()
+            if (a != "") {
+                $.get("/getdoc/", { 'paperid': a }, function (ret) {
+                        $('#todown').html(ret)//将响应结果添加到网页
+                });
+            }
+        })
+    })
+</script>

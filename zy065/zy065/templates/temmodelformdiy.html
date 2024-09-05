@@ -1,0 +1,7 @@
+﻿<form action="/mdiy/" method="POST">
+    {% csrf_token %}
+    <table>{{mform.as_p}}</table>
+    <input type="submit" value="提交">
+</form>
+<hr>
+{{msg}}

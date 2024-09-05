@@ -1,0 +1,25 @@
+﻿{% extends "admin/change_form.html" %}<!--继承默认模板-->
+{% load i18n admin_urls %}<!--加载Django自定义的模板标记集-->
+{% block after_field_sets %}<!--覆盖after_field_sets块-->
+<script>
+    django.jQuery(document).ready(function () {
+        django.jQuery('#id_type').change(function () {
+            //#id_type是试题类型列表，在改变试题类型时，
+            //根据是否处于添加数据状态，隐藏或显示试题选项编辑框
+            var url = window.location.href;//获得页面URL
+            var pos = url.indexOf("/add/");//检查URL是否包含/add/，包含则是添加数据
+            if (pos >= 0) {
+                //在处于添加数据状态时，首先获得选择的试题类型的ID
+                var p1 = django.jQuery(this).children('option:selected').val();
+                if (p1 > 1) {
+                    //添加非单项选择题记录时，隐藏试题选项
+                    django.jQuery('#id_options').css("display", "none");
+                } else {
+                    //添加单选项选择题记录时，显示试题选项
+                    django.jQuery('#id_options').css("display", "block");
+                }
+            }
+        })
+    })
+</script>
+{% endblock %}

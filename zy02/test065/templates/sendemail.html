@@ -1,0 +1,7 @@
+﻿Django自定义邮件发送表单
+<form action="" method="POST">
+    {% csrf_token %}
+    <table>{{form}}</table>
+    <input type="submit" value="发送">
+</form>
+<span style="color:red">{{msg}}</span>
